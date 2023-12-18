@@ -3,9 +3,8 @@ package Db;
 
 import Models.Customer;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -32,6 +31,27 @@ public class Database {
 
 
     }
+
+    public static ArrayList<Customer> getCustomers() throws IOException {
+
+            ArrayList<Customer> customers = new ArrayList<Customer>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(customerPath))) {
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] values =line.split(";");
+                customers.add(new Customer(values[0],values[1],values[2],values[3],values[4],values[5]));
+            }
+
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return customers;
+
+
+    }
+
 
 }
 
