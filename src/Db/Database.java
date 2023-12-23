@@ -13,6 +13,7 @@ public class Database {
     private static final String restaurantsPath = "Database/restaurants.txt";
     private static final String restaurantFolder = "Database/Restaurants";
 
+    public static final String[] towns = {"Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar","Zeytinburnu"};
 
     public static void newCustomer(Customer customer) throws IOException {
 
@@ -111,6 +112,9 @@ public class Database {
         });
         return  filteredRestaurants;
     }
+
+
+
 
 
 }
