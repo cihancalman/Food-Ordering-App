@@ -2,6 +2,7 @@ package Controller;
 
 import Db.Database;
 import Models.Customer;
+import Views.CustomerGUI;
 
 import java.io.IOException;
 
@@ -14,7 +15,9 @@ public class CustomerController {
              if (customer.getEmail().equals(email)){
                  if (customer.getPassword().equals(password)){
 
-                     //TODO
+                     CustomerGUI customerGUI = new CustomerGUI(customer,Database.getRestaurants(customer.getTown()));
+                     customerGUI.setVisible(true);
+
                      return "success";
                  }
                  return "password";

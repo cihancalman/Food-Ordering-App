@@ -139,7 +139,7 @@ public class LoginGUI extends JFrame {
                            customerLoginPassErr.setVisible(true);
                            break;
                        default:
-                           System.out.println("login");
+
                            break;
 
                    }
@@ -280,6 +280,7 @@ public class LoginGUI extends JFrame {
                     switch (res){
                         case "email":
                             customerRegisterMailErr.setText("Kullanıcı zaten mevcut");
+                            customerRegisterMailErr.setVisible(true);
                             break;
                         case "success":
                             System.out.println("register");

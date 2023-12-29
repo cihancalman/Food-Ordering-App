@@ -2,7 +2,9 @@ package Controller;
 
 import Db.Database;
 
+import Models.Food;
 import Models.Restaurant;
+import Views.RestaurantGUI;
 
 import java.io.IOException;
 
@@ -14,7 +16,8 @@ public class RestaurantController {
                 if (restaurant.getEmail().equals(email)){
                     if (restaurant.getPassword().equals(password)){
 
-                        //TODO
+                        RestaurantGUI restaurantGUI = new RestaurantGUI(restaurant);
+                        restaurantGUI.setVisible(true);
                         return "success";
                     }
                     return "password";
@@ -46,4 +49,14 @@ public class RestaurantController {
         RestaurantController.login(email, password);
         return "success";
     }
-}
+
+    public static  String addFood(String name,String description,String price,String deliveryTime,Restaurant restaurant) {
+        for (Food food : Database.getFoods(restaurant)) {
+            if (food.getName().equals(name)) {
+                return "err";
+            }
+        }
+
+        Database.addFood(new Food(name,description,price,deliveryTime),restaurant);
+        return "success";
+    }}
