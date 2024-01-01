@@ -1,10 +1,10 @@
-package Views;
+package View;
 
 import Db.Database;
-import Models.Customer;
-import Models.Food;
-import Models.Order;
-import Models.Restaurant;
+import Model.Customer;
+import Model.Food;
+import Model.Order;
+import Model.Restaurant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 import javax.swing.border.EmptyBorder;
 
-public class CustomerGUI extends JFrame {
+public class CustomerGUI  {
 
-
+    private JFrame frame;
     private JSplitPane panel1;
     private JLabel userNameField;
     private JLabel userTownField;
@@ -33,16 +33,17 @@ public class CustomerGUI extends JFrame {
     private JPanel shoppingCartPanel;
     private JScrollPane shoppingCartScrollPane;
     private JLabel cost;
+    private JButton çıkışYapButton;
     private ArrayList<Order> shoppingCart = new ArrayList<Order>();
 
     int sumPrice = 0;
 
     public CustomerGUI(Customer customer, ArrayList<Restaurant> restaurants){
-
-        add(panel1);
-        setSize(1350
+        frame = new JFrame("Food Ordering App | " + customer.getName()+" "+customer.getSurname());
+        frame.add(panel1);
+        frame.setSize(1350
                 ,600);
-        setResizable(false);
+        frame.setResizable(false);
 
         userNameField.setText(customer.getName()+" "+customer.getSurname());
         userTownField.setText(customer.getTown());
@@ -72,6 +73,14 @@ public class CustomerGUI extends JFrame {
                 showCart();
                 JOptionPane.showMessageDialog(null, "Siparişleriniz Alınmıştır.");
 
+            }
+        });
+        çıkışYapButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                LoginGUI login = new LoginGUI();
+                login.getFrame().setVisible(true);
             }
         });
     }
@@ -239,6 +248,9 @@ public class CustomerGUI extends JFrame {
 
 
         }
+    public JFrame getFrame() {
+        return frame;
+    }
 
     }
 

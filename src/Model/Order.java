@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 public class Order {
     private String id;
@@ -8,20 +8,20 @@ public class Order {
 
     private String customerName;
     private String customerTown;
-    private String customerFullAdress;
+    private String customerFullAddress;
     private String restaurantName;
     private String restaurantMail;
 
     private boolean isDelivered ;
 
-    public Order(String id,String foodName, String foodPrice, String deliveryTime, String customerName, String customerTown, String customerFullAdress, String restaurantName, String restaurantMail, boolean isDelivered) {
+    public Order(String id, String foodName, String foodPrice, String deliveryTime, String customerName, String customerTown, String customerFullAddress, String restaurantName, String restaurantMail, boolean isDelivered) {
         this.id = id;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.deliveryTime = deliveryTime;
         this.customerName = customerName;
         this.customerTown = customerTown;
-        this.customerFullAdress = customerFullAdress;
+        this.customerFullAddress = customerFullAddress;
         this.restaurantName = restaurantName;
         this.restaurantMail = restaurantMail;
         this.isDelivered = isDelivered;
@@ -75,12 +75,12 @@ public class Order {
         this.customerTown = customerTown;
     }
 
-    public String getCustomerFullAdress() {
-        return customerFullAdress;
+    public String getCustomerFullAddress() {
+        return customerFullAddress;
     }
 
-    public void setCustomerFullAdress(String customerFullAdress) {
-        this.customerFullAdress = customerFullAdress;
+    public void setCustomerFullAddress(String customerFullAddress) {
+        this.customerFullAddress = customerFullAddress;
     }
 
     public String getRestaurantName() {
@@ -109,6 +109,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return id+";"+foodName+";"+foodPrice+";"+deliveryTime+";"+customerName+";"+customerTown+";"+customerFullAdress+";"+String.valueOf(isDelivered);
+        return id+";"+foodName+";"+foodPrice+";"+deliveryTime+";"+customerName+";"+customerTown+";"+ customerFullAddress +";"+String.valueOf(isDelivered);
     }
 }

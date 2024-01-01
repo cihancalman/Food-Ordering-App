@@ -1,9 +1,8 @@
-package Views;
+package View;
 
 import Controller.CustomerController;
 import Controller.RestaurantController;
-import Db.Database;
-import Helpers.Regex;
+import Controller.Regex;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class LoginGUI extends JFrame {
+public class LoginGUI  {
+    private JFrame frame;
     private JPanel panel1;
     private JPanel admin;
     private JPanel restaurant;
@@ -50,11 +50,6 @@ public class LoginGUI extends JFrame {
     private JLabel customerRegisterNameErr;
     private JLabel customerRegisterSurnameErr;
     private JLabel customerRegisterAddresErr;
-    private JPanel adminLogin;
-    private JPasswordField adminLoginPassword;
-    private JTextField adminLoginMail;
-    private JLabel adminLoginMailErr;
-    private JLabel adminLoginPassErr;
     private JPanel restaurantRegister;
     private JButton restaurantRegisterRdrctBtn;
     private JTextField restaurantRegisterRestaurantName;
@@ -72,9 +67,10 @@ public class LoginGUI extends JFrame {
     private JLabel restaurantRegisterMailErr;
 
     public LoginGUI(){
-        add(panel1);
-        setSize(900,600);
-        setResizable(false);
+        frame = new JFrame("Food Ordering App | Login");
+        frame.add(panel1);
+        frame.setSize(900,600);
+        frame.setResizable(false);
 
 
 
@@ -82,7 +78,7 @@ public class LoginGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 restaurant.setVisible(true);
-                admin.setVisible(false);
+
                 customer.setVisible(false);
             }
         });
@@ -91,17 +87,10 @@ public class LoginGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 customer.setVisible(true);
                 restaurant.setVisible(false);
-                admin.setVisible(false);
+
             }
         });
-        adminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                admin.setVisible(true);
-                customer.setVisible(false);
-                restaurant.setVisible(false);
-            }
-        });
+
         // CUSTOMER
         customerLoginRdrctBtn.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +128,7 @@ public class LoginGUI extends JFrame {
                            customerLoginPassErr.setVisible(true);
                            break;
                        default:
-
+                            closeFrame();
                            break;
 
                    }
@@ -199,6 +188,7 @@ public class LoginGUI extends JFrame {
                             break;
                         default:
                             System.out.println("login");
+                            closeFrame();
                             break;
 
                     }
@@ -284,6 +274,7 @@ public class LoginGUI extends JFrame {
                             break;
                         case "success":
                             System.out.println("register");
+                            closeFrame();
                             break;
                         default:
                             break;
@@ -398,6 +389,7 @@ public class LoginGUI extends JFrame {
                             break;
                         case "success":
                             System.out.println("register");
+                            closeFrame();
                             break;
                         default:
                             break;
@@ -476,4 +468,11 @@ public class LoginGUI extends JFrame {
          */
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void closeFrame(){
+        getFrame().dispose();
+    }
 }

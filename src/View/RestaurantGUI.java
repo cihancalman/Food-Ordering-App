@@ -1,10 +1,10 @@
-package Views;
+package View;
 
 import Controller.RestaurantController;
 import Db.Database;
-import Helpers.Regex;
-import Models.Order;
-import Models.Restaurant;
+import Controller.Regex;
+import Model.Order;
+import Model.Restaurant;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,13 +17,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-public class RestaurantGUI extends JFrame {
+public class RestaurantGUI  {
+    private JFrame frame;
     private JLabel restaurantNameField;
     private JLabel restaurantResNameField;
     private JPanel homePage;
     private JLabel greetingField;
-    private JLabel greetingTownField;
-    private JPanel restaurantsFrame;
     private JSplitPane splitPane;
     private JButton restaurantFoodBtn;
     private JPanel foodPage;
@@ -42,20 +41,25 @@ public class RestaurantGUI extends JFrame {
     private JTabbedPane tabbedPane2;
     private JPanel completedOrders;
     private JPanel uncompletedOrders;
+    private JButton logoutBtn;
+    private JLabel greetingField1;
+    private JLabel greetingField2;
 
     public RestaurantGUI(Restaurant restaurant){
-        add(splitPane);
-        setSize(1070
+
+        frame = new JFrame("Food Ordering App | " + restaurant.getRestaurantName());
+        frame.add(splitPane);
+        frame.setSize(1070
                 ,600);
-        setResizable(false);
+        frame.setResizable(false);
         restaurantNameField.setText(restaurant.getName() +" "+ restaurant.getSurname());
         restaurantResNameField.setText(restaurant.getRestaurantName());
-        greetingField.setText("Hoşgeldin "+restaurant.getName());
 
 
 
 
-
+        greetingField1.setText("Hoşgeldin "+ restaurant.getName());
+        greetingField2.setText("Hoşgeldin " + restaurant.getName());
 
 
 
@@ -75,7 +79,7 @@ public class RestaurantGUI extends JFrame {
         restaurantFoodBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.setVisible(false);
+
                 orderPage.setVisible(false);
                 foodPage.setVisible(true);
             }
@@ -192,11 +196,19 @@ public class RestaurantGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 foodPage.setVisible(false);
-                homePage.setVisible(false);
+
                 orderPage.setVisible(true);
                 showCompletedOrders(restaurant);
 
 
+            }
+        });
+        logoutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                LoginGUI loginGUI = new LoginGUI();
+                loginGUI.getFrame().setVisible(true);
             }
         });
     }
@@ -227,22 +239,40 @@ public class RestaurantGUI extends JFrame {
             JLabel foodDeliveryLabel = new JLabel("Teslimat Süresi :"+ food.getDeliveryTime() + " (dk)");
             foodDeliveryLabel.setForeground(new Color(229, 26, 0));
             foodDeliveryLabel.setFont(new Font("Inconsolata", Font.PLAIN, 18));
+            JButton deleteBtn = new JButton("Ürünü Sil");
 
+            deleteBtn.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Database.deleteFood(food,restaurant);
+                    showFoods(restaurant);
+                    /*showCompletedOrders(restaurant);
+                    showUncompletedOrders(restaurant);*/
+
+                }
+            });
 
             foodNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             foodDescriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             foodPriceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             foodDeliveryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            deleteBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
             myPanel.add(foodNameLabel);
             myPanel.add(foodDescriptionLabel);
             myPanel.add(foodPriceLabel);
             myPanel.add(foodDeliveryLabel);
+            myPanel.add(deleteBtn);
 
 
 
             restaurantFoodsPanel.add(myPanel);
             restaurantFoodsPanel.add(Box.createVerticalStrut(20));
+            myPanel.revalidate();
+            myPanel.repaint();
+            myPanel.add(Box.createVerticalStrut(5));
+            restaurantFoodsPanel.add(Box.createVerticalStrut(20));
+            restaurantFoodsPanel.revalidate();
+            restaurantFoodsPanel.repaint();
 
 
 
@@ -269,7 +299,7 @@ public class RestaurantGUI extends JFrame {
             JLabel orderFoodNameLabel = new JLabel(order.getFoodName());
             orderFoodNameLabel.setForeground(new Color(229, 26, 0));
             orderFoodNameLabel.setFont(new Font("Inconsolata", Font.PLAIN, 30));
-            JLabel orderCustomerAddressLabel = new JLabel(order.getCustomerFullAdress() + " - " + order.getCustomerTown());
+            JLabel orderCustomerAddressLabel = new JLabel(order.getCustomerFullAddress() + " - " + order.getCustomerTown());
 
             orderCustomerAddressLabel.setForeground(new Color(229, 26, 0));
             orderCustomerAddressLabel.setFont(new Font("Inconsolata", Font.PLAIN, 14));
@@ -314,7 +344,7 @@ public class RestaurantGUI extends JFrame {
             JLabel orderFoodNameLabel = new JLabel(order.getFoodName());
             orderFoodNameLabel.setForeground(new Color(229, 26, 0));
             orderFoodNameLabel.setFont(new Font("Inconsolata", Font.PLAIN, 30));
-            JLabel orderCustomerAddressLabel = new JLabel(order.getCustomerFullAdress() + " - " + order.getCustomerTown());
+            JLabel orderCustomerAddressLabel = new JLabel(order.getCustomerFullAddress() + " - " + order.getCustomerTown());
 
             orderCustomerAddressLabel.setForeground(new Color(229, 26, 0));
             orderCustomerAddressLabel.setFont(new Font("Inconsolata", Font.PLAIN, 14));
@@ -354,5 +384,8 @@ public class RestaurantGUI extends JFrame {
         }
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
 }
 

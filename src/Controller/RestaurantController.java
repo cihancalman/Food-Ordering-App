@@ -2,11 +2,12 @@ package Controller;
 
 import Db.Database;
 
-import Models.Food;
-import Models.Restaurant;
-import Views.RestaurantGUI;
+import Model.Food;
+import Model.Restaurant;
+import View.RestaurantGUI;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class RestaurantController {
 
@@ -17,7 +18,7 @@ public class RestaurantController {
                     if (restaurant.getPassword().equals(password)){
 
                         RestaurantGUI restaurantGUI = new RestaurantGUI(restaurant);
-                        restaurantGUI.setVisible(true);
+                        restaurantGUI.getFrame().setVisible(true);
                         return "success";
                     }
                     return "password";
@@ -57,6 +58,6 @@ public class RestaurantController {
             }
         }
 
-        Database.addFood(new Food(name,description,price,deliveryTime),restaurant);
+        Database.addFood(new Food(UUID.randomUUID().toString(),name,description,price,deliveryTime),restaurant);
         return "success";
     }}

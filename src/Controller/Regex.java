@@ -1,8 +1,8 @@
-package Helpers;
+package Controller;
 import java.util.regex.*;
 
 
-public class Regex {
+public abstract class Regex {
     private static final String EMAIL_REGEX =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[a-z0-9-]+(\\.[a-z0-9]+)*(\\.[a-z]{2,})$";

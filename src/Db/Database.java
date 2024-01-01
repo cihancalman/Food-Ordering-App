@@ -1,21 +1,20 @@
 package Db;
 
 
-import Models.Customer;
-import Models.Food;
-import Models.Order;
-import Models.Restaurant;
+import Model.Customer;
+import Model.Food;
+import Model.Order;
+import Model.Restaurant;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class Database {
+public abstract class Database {
 
     private static final String customersPath = "Database/customers.txt";
     private static final String restaurantsPath = "Database/restaurants.txt";
     private static final String restaurantFolder = "Database/Restaurants";
 
-    public static final String[] towns = {"Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar","Zeytinburnu"};
 
     public static void newCustomer(Customer customer) throws IOException {
 
@@ -137,7 +136,7 @@ public class Database {
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] values =line.split(";");
-                foods.add(new Food(values[0],values[1],values[2],values[3]));
+                foods.add(new Food(values[0],values[1],values[2],values[3],values[4]));
             }
 
 
@@ -202,29 +201,67 @@ public class Database {
         return orders;
     }
     public static void updateOrders(Order order) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(restaurantFolder+ File.separator + order.getRestaurantMail() + File.separator+ "orders.txt"));
+        File inputFile =new File(restaurantFolder+ File.separator + order.getRestaurantMail() + File.separator+ "orders.txt");
+        File outputFile = new File(restaurantFolder+ File.separator + order.getRestaurantMail() + File.separator+ "orders_temp.txt");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputFile));
         String line;
-        StringBuilder newContent = new StringBuilder();
+
         while ((line = bufferedReader.readLine()) != null) {
             if (line.contains(order.getId())) {
 
-                String newLine = line.replace("false", "true"); // Değiştirme işlemi
-                newContent.append(newLine).append("\n");
-            } else {
-                newContent.append(line).append("\n");
+                line = line.replace("false", "true");
             }
+            bufferedWriter.write(line + System.lineSeparator());
         }
         bufferedReader.close();
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(restaurantFolder+ File.separator + order.getRestaurantMail() + File.separator+ "orders.txt"));
-        bufferedWriter.write(newContent.toString());
         bufferedWriter.close();
+
+        if (inputFile.delete()) {
+            if (!outputFile.renameTo(inputFile)) {
+                System.out.println("err");
+            }
+        } else {
+            System.out.println("err");
+        }
+
+
     }
 
+    public static void deleteFood(Food food,Restaurant restaurant){
+        try {
+            File inputFile = new File(restaurantFolder+ File.separator + restaurant.getEmail() + File.separator+ "foods.txt");
+            File tempFile = new File(restaurantFolder+ File.separator + restaurant.getEmail() + File.separator+ "foods_temp.txt");
+
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(tempFile));
+
+            String currentLine;
+
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                if (!currentLine.contains(food.getId())) {
+                    bufferedWriter.write(currentLine + System.getProperty("line.separator"));
+                }
+            }
+
+            bufferedWriter.close();
+            bufferedReader.close();
+
+            if (inputFile.delete()) {
+                if (!tempFile.renameTo(inputFile)) {
+                    System.out.println("err");
+                }
+            } else {
+                System.out.println("err");
+            }
+    }catch (IOException ex) {
+            System.out.println("err");
+        }
 
 
 
 
-}
+
+}}
 
 

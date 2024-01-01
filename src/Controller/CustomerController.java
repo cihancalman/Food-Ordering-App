@@ -1,13 +1,14 @@
 package Controller;
 
 import Db.Database;
-import Models.Customer;
-import Views.CustomerGUI;
+import Model.Customer;
+import View.CustomerGUI;
 
 import java.io.IOException;
 
 
-public class CustomerController {
+public abstract class  CustomerController {
+
 
     public static String login(String email,String password){
         try {
@@ -16,7 +17,7 @@ public class CustomerController {
                  if (customer.getPassword().equals(password)){
 
                      CustomerGUI customerGUI = new CustomerGUI(customer,Database.getRestaurants(customer.getTown()));
-                     customerGUI.setVisible(true);
+                     customerGUI.getFrame().setVisible(true);
 
                      return "success";
                  }

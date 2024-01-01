@@ -1,6 +1,8 @@
-package Models;
+package Model;
 
 public class Food {
+
+    private String id;
     private String name;
     private String description;
 
@@ -8,12 +10,17 @@ public class Food {
     private String deliveryTime;
 
 
-    public Food(String name, String description, String price, String deliveryTime) {
+    public Food(String id,String name, String description, String price, String deliveryTime) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.deliveryTime = deliveryTime;
 
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -54,6 +61,6 @@ public class Food {
 
     @Override
     public String toString() {
-        return this.getName()+";"+this.getDescription()+";"+this.getPrice()+";"+ this.getDeliveryTime();
+        return this.getId()+";"+this.getName()+";"+this.getDescription()+";"+this.getPrice()+";"+ this.getDeliveryTime();
     }
 }
